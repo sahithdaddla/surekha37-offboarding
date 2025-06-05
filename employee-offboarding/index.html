@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Offboarding Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 2vw;
+            color: #2c3e50;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 4vw;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 3vw;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #2f3790 0%, #7dacf4 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3.5vw, 1.3rem);
+        }
+
+        .form-section {
+            background-color: #f9fafc;
+            border-radius: 8px;
+            padding: 2vw;
+            margin-bottom: 3vw;
+            border: 1px solid #e5e9f2;
+        }
+
+        .form-group {
+            margin-bottom: 2.5vw;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5vw;
+            font-weight: 600;
+            color: #34495e;
+            font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 1vw;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        textarea {
+            resize: none;
+            height: 15vw;
+            max-height: 70px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+            display: none;
+            margin-top: 0.8vw;
+        }
+
+        .error-field {
+            border-color: #e74c3c !important;
+        }
+
+        .required::after {
+            content: '*';
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 1vw;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .rating {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5vw;
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        .date-input {
+            position: relative;
+        }
+
+        .date-format-hint {
+            font-size: clamp(0.65rem, 1.8vw, 0.7rem);
+            color: #666;
+            margin-top: 0.8vw;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 1vw;
+        }
+
+        .char-counter {
+            font-size: clamp(0.65rem, 1.8vw, 0.7rem);
+            color: #666;
+            text-align: right;
+            margin-top: 0.8vw;
+        }
+
+        .info-icon {
+            display: inline-block;
+            width: 3.5vw;
+            height: 3.5vw;
+            max-width: 14px;
+            max-height: 14px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 3.5vw;
+            font-size: clamp(0.65rem, 1.8vw, 0.7rem);
+            margin-left: 1vw;
+            cursor: help;
+            position: relative;
+        }
+
+        .info-icon:hover .tooltip {
+            display: block;
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 1.5vw 2.5vw;
+            border-radius: 4px;
+            font-size: clamp(0.65rem, 1.8vw, 0.7rem);
+            width: 45vw;
+            max-width: 180px;
+            bottom: 5vw;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 4vw;
+            }
+
+            .form-section {
+                padding: 4vw;
+            }
+
+            input, select, textarea {
+                padding: 2vw;
+            }
+
+            button {
+                padding: 2.5vw;
+            }
+
+            .rating {
+                flex-direction: column;
+                gap: 2vw;
+            }
+
+            .tooltip {
+                width: 55vw;
+                bottom: 6vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                padding: 0.8rem;
+                font-size: clamp(1.2rem, 5vw, 1.5rem);
+            }
+
+            h2 {
+                font-size: clamp(1rem, 4vw, 1.2rem);
+            }
+
+            .form-group {
+                margin-bottom: 4vw;
+            }
+
+            label {
+                font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+            }
+
+            input, select, textarea {
+                font-size: clamp saper(0.75rem, 2.5vw, 0.8rem);
+                padding: 2.5vw;
+            }
+
+            textarea {
+                height: 20vw;
+                max-height: 80px;
+            }
+
+            button {
+                font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+                padding: 3vw;
+            }
+
+            .error-message, .char-counter, .date-format-hint {
+                font-size: clamp(0.6rem, 2vw, 0.65rem);
+            }
+
+            .info-icon {
+                width: 4vw;
+                height: 4vw;
+                line-height: 4vw;
+                font-size: clamp(0.6rem, 2vw, 0.65rem);
+            }
+
+            .tooltip {
+                width: 70vw;
+                padding: 2vw 3vw;
+                bottom: 7vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Offboarding Form</h1>
+        <form id="offboardingForm" novalidate>
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <h2>Personal Information</h2>
+                <div class="form-group">
+                    <label for="employeeId" class="required">Employee ID</label>
+                    <input type="text" id="employeeId" name="employeeId" required placeholder="ATS0XXX" maxlength="7">
+                    <div class="error-message" id="employeeIdError">Invalid Employee ID (Format: ATS0XXX)</div>
+                    <div class="error-message" id="employeeIdDuplicateError">This Employee ID has already been used</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName" class="required">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Enter full name (min 5 characters)" maxlength="30">
+                    <div class="error-message" id="fullNameError">Name must be at least 5 alphabetic characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="required">Email</label>
+                    <input type="text" id="email" name="email" required placeholder="user@astrolitetech.com" maxlength="40">
+                    <div class="error-message" id="emailError">Invalid Email (min 5 alphanumeric chars before @astrolitetech.com, only @.# allowed)</div>
+                    <div class="error-message" id="emailDuplicateError">This Email has already been used</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="department" class="required">Department</label>
+                    <select id="department" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="IT">IT</option>
+                        <option value="HR">HR</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Marketing">Marketing</option>
+                    </select>
+                    <div class="error-message" id="departmentError">Please select a department</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="designation" class="required">Designation</label>
+                    <input type="text" id="designation" name="designation" required placeholder="Enter Designation (min 3 characters)" maxlength="30">
+                    <div class="error-message" id="designationError">Designation must be at least 3 alphabetic characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="joiningDate" class="required">Joining Date</label>
+                    <div class="date-input">
+                        <input type="date" id="joiningDate" name="joiningDate" required>
+                        <div class="error-message" id="joiningDateError">Invalid Date or before 1970</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastDay" class="required">Last Working Day</label>
+                    <div class="date-input">
+                        <input type="date" id="lastDay" name="lastDay" required>
+                        <div class="error-message" id="lastDayError">Must be within 1 month from today, after joining date, and at least 90 days after joining date</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Assets Section -->
+            <div class="form-section">
+                <h2>Technical Assets Return</h2>
+                <div class="form-group">
+                    <label for="laptop" class="required">Laptop Details</label>
+                    <input type="text" id="laptop" name="laptop" required placeholder="Asset Number/Model" maxlength="30">
+                    <div class="error-message" id="laptopError">Details must be 3-30 chars, no triple repeating digits/special chars</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="laptopCondition" class="required">Laptop Condition</label>
+                    <select id="laptopCondition" name="laptopCondition" required>
+                        <option value="">Select Condition</option>
+                        <option value="Good">Good</option>
+                        <option value="Average">Average</option>
+                        <option value="Poor">Poor</option>
+                    </select>
+                    <div class="error-message" id="laptopConditionError">Please select laptop condition</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="accessCard" class="required">Access Card Number</label>
+                    <input type="text" id="accessCard" name="accessCard" required placeholder="Enter Access Card Number (6-12 chars)" maxlength="12">
+                    <div class="error-message" id="accessCardError">Must be 6-12 alphanumeric chars with optional hyphens</div>
+                </div>
+            </div>
+
+            <!-- Project Details Section -->
+            <div class="form-section">
+                <h2>Project Information</h2>
+                <div class="form-group">
+                    <label for="currentProjects" class="required">Current Projects</label>
+                    <textarea id="currentProjects" name="currentProjects" required placeholder="List current projects (min 5 characters)" maxlength="150"></textarea>
+                    <div class="char-counter" id="currentProjectsCounter">0/150</div>
+                    <div class="error-message" id="currentProjectsError">Must be 5-150 chars, no triple repeating digits/special chars</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pendingTasks" class="required">Pending Tasks</label>
+                    <textarea id="pendingTasks" name="pendingTasks" required placeholder="List pending tasks (min 5 characters)" maxlength="150"></textarea>
+                    <div class="char-counter" id="pendingTasksCounter">0/150</div>
+                    <div class="error-message" id="pendingTasksError">Must be 5-150 chars, no triple repeating digits/special chars</div>
+                </div>
+            </div>
+
+            <!-- Exit Interview Section -->
+            <div class="form-section">
+                <h2>Exit Interview</h2>
+                <div class="form-group">
+                    <label for="reasonForLeaving" class="required">Reason for Leaving</label>
+                    <select id="reasonForLeaving" name="reasonForLeaving" required>
+                        <option value="">Select Reason</option>
+                        <option value="Better Opportunity">Better Opportunity</option>
+                        <option value="Career Growth">Career Growth</option>
+                        <option value="Compensation">Compensation</option>
+                        <option value="Work Environment">Work Environment</option>
+                        <option value="Personal Reasons">Personal Reasons</option>
+                    </select>
+                    <div class="error-message" id="reasonForLeavingError">Please select a reason for leaving</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Overall Experience</label>
+                    <div class="rating">
+                        <label><input type="radio" name="overallExperience" value="1"> Very Poor</label>
+                        <label><input type="radio" name="overallExperience" value="2"> Poor</label>
+                        <label><input type="radio" name="overallExperience" value="3"> Average</label>
+                        <label><input type="radio" name="overallExperience" value="4"> Good</label>
+                        <label><input type="radio" name="overallExperience" value="5"> Excellent</label>
+                    </div>
+                    <div class="error-message" id="overallExperienceError">Please select your overall experience</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedback">Feedback</label>
+                    <textarea id="feedback" name="feedback" placeholder="Your feedback (max 150 chars)" maxlength="150"></textarea>
+                    <div class="char-counter" id="feedbackCounter">0/150</div>
+                    <div class="error-message" id="feedbackError">No triple repeating digits/special chars</div>
+                </div>
+            </div>
+
+            <button type="submit">Submit Offboarding Form</button>
+        </form>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('offboardingForm');
+
+        // Set date input constraints
+        const setupDateInputs = () => {
+            const joiningDateInput = document.getElementById('joiningDate');
+            const lastDayInput = document.getElementById('lastDay');
+            
+            // Set min date to Jan 1, 1970
+            const minDate = new Date('1970-01-01').toISOString().split('T')[0];
+            
+            // Set max date for last day to 1 month from today
+            const today = new Date();
+            const maxDate = new Date(today.setMonth(today.getMonth() + 1)).toISOString().split('T')[0];
+            const currentDate = new Date().toISOString().split('T')[0];
+            
+            // Apply constraints to joining date
+            joiningDateInput.setAttribute('min', minDate);
+            joiningDateInput.setAttribute('max', currentDate);
+            
+            // Apply constraints to last day
+            lastDayInput.setAttribute('max', maxDate);
+            lastDayInput.setAttribute('min', currentDate);
+            
+            // Update last day min date when joining date changes
+            joiningDateInput.addEventListener('change', function() {
+                if (this.value) {
+                    const minLastDay = new Date(this.value);
+                    minLastDay.setDate(minLastDay.getDate() + 90); // 90-day minimum gap
+                    lastDayInput.setAttribute('min', minLastDay.toISOString().split('T')[0]);
+                    validateField(lastDayInput); // Revalidate last day when joining date changes
+                }
+            });
+        };
+        
+        // Set up character counters and limits
+        const setupCharCounters = () => {
+            const textInputs = document.querySelectorAll('#currentProjects, #pendingTasks, #feedback, #laptop');
+            
+            textInputs.forEach(input => {
+                const counterId = input.id + 'Counter';
+                const counter = document.getElementById(counterId);
+                
+                if (counter) {
+                    // Initial count
+                    const count = input.value.replace(/\s+/g, '').length;
+                    counter.textContent = `${count}/150`;
+                    
+                    // Update counter on input
+                    input.addEventListener('input', function() {
+                        const text = this.value;
+                        const textWithoutSpaces = text.replace(/\s+/g, '');
+                        const count = textWithoutSpaces.length;
+                        
+                        counter.textContent = `${count}/150`;
+                        
+                        // Prevent entering more than 150 non-space characters
+                        if (count > 150) {
+                            let chars = text.split('');
+                            let nonSpaceCount = 0;
+                            let position = 0;
+                            
+                            for (let i = 0; i < chars.length; i++) {
+                                if (chars[i] !== ' ') {
+                                    nonSpaceCount++;
+                                }
+                                
+                                if (nonSpaceCount > 150) {
+                                    position = i;
+                                    break;
+                                }
+                            }
+                            
+                            this.value = text.substring(0, position);
+                            counter.textContent = `150/150`;
+                        }
+                    });
+                }
+            });
+        };
+
+        // Validation Functions
+        function validateEmployeeId(id) {
+            return /^ATS0[0-9]{2}[1-9]{1}$/.test(id);
+        }
+
+        function validateName(name, minLength) {
+            const nameWithoutSpaces = name.replace(/\s/g, '');
+            return /^[A-Za-z\s]+$/.test(name) && nameWithoutSpaces.length >= minLength;
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[A-Za-z0-9@.#]{5,}@astrolitetech\.com$/;
+            if (!emailRegex.test(email)) {
+                return false;
+            }
+            const prefix = email.split('@')[0];
+            return /^[A-Za-z0-9@.#]+$/.test(prefix);
+        }
+
+        function validateTextWithRestrictions(text, minLength) {
+            const textWithoutSpaces = text.replace(/\s/g, '');
+            const noTripleRepeat = !/([0-9\W])\1{2,}/.test(text);
+            return /^[A-Za-z0-9\s,.!@#$%^&*()_+-=]+$/.test(text) && 
+                   textWithoutSpaces.length >= minLength && 
+                   noTripleRepeat;
+        }
+
+        function validateAccessCard(cardNumber) {
+            return /^[A-Za-z0-9-]{6,12}$/.test(cardNumber);
+        }
+
+        async function checkDuplicateEmployeeId(employeeId) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/submissions/search/${encodeURIComponent(employeeId)}`);
+                if (!response.ok) {
+                    throw new Error('Failed to check duplicate employee ID');
+                }
+                const submissions = await response.json();
+                return submissions.some(submission => submission.employee_id === employeeId);
+            } catch (error) {
+                console.error('Error checking duplicate employee ID:', error);
+                return false;
+            }
+        }
+
+        async function checkDuplicateEmail(email) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/submissions/search/${encodeURIComponent(email)}`);
+                if (!response.ok) {
+                    throw new Error('Failed to check duplicate email');
+                }
+                const submissions = await response.json();
+                return submissions.some(submission => submission.email === email);
+            } catch (error) {
+                console.error('Error checking duplicate email:', error);
+                return false;
+            }
+        }
+
+        function preventLeadingSpaces(field) {
+            field.addEventListener('input', function() {
+                if (this.value.startsWith(' ')) {
+                    this.value = this.value.trimStart();
+                }
+                this.value = this.value.replace(/\s{2,}/g, ' ');
+            });
+        }
+
+        function showError(fieldId, show = true, message = '') {
+            const errorElement = document.getElementById(`${fieldId}Error`);
+            const duplicateErrorElement = document.getElementById(`${fieldId}DuplicateError`);
+            const field = document.getElementById(fieldId);
+            
+            if (!errorElement || !field) {
+                console.error(`Error element or field not found for ID: ${fieldId}`);
+                return false;
+            }
+            
+            if (duplicateErrorElement) {
+                duplicateErrorElement.style.display = 'none';
+            }
+
+            if (show) {
+                field.classList.add('error-field');
+                errorElement.style.display = 'block';
+                if (message) {
+                    errorElement.textContent = message;
+                }
+                return false;
+            } else {
+                field.classList.remove('error-field');
+                errorElement.style.display = 'none';
+                return true;
+            }
+        }
+
+        function showDuplicateError(fieldId) {
+            const errorElement = document.getElementById(`${fieldId}DuplicateError`);
+            const field = document.getElementById(fieldId);
+            
+            if (!errorElement || !field) {
+                console.error(`Duplicate error element or field not found for ID: ${fieldId}`);
+                return false;
+            }
+
+            field.classList.add('error-field');
+            errorElement.style.display = 'block';
+            return false;
+        }
+
+        function validateField(field) {
+            const value = field.value.trim();
+            
+            switch(field.id) {
+                case 'employeeId':
+                    if (!validateEmployeeId(value)) {
+                        return showError(field.id, true, 'Invalid Employee ID (Format: ATS0XXX, no special characters)');
+                    }
+                    return showError(field.id, false);
+                
+                case 'fullName':
+                    return showError(field.id, !validateName(value, 5), 'Name must be at least 5 alphabetic characters');
+                
+                case 'email':
+                    return showError(field.id, !validateEmail(value), 'Invalid Email (min 5 alphanumeric chars before @astrolitetech.com, only @.# allowed)');
+                
+                case 'department':
+                    return showError(field.id, !value, 'Please select a department');
+                
+                case 'designation':
+                    return showError(field.id, !validateName(value, 3), 'Designation must be at least 3 alphabetic characters');
+                
+                case 'joiningDate':
+                    if (!value) {
+                        return showError(field.id, true, 'Please select a joining date');
+                    }
+                    const jDate = new Date(value);
+                    const jToday = new Date();
+                    jToday.setHours(0, 0, 0, 0);
+                    
+                    const minDate = new Date('1970-01-01');
+                    if (jDate < minDate) {
+                        return showError(field.id, true, 'Joining date cannot be before 1970');
+                    }
+                    if (jDate > jToday) {
+                        return showError(field.id, true, 'Joining date cannot be in the future');
+                    }
+                    return showError(field.id, false);
+                
+                case 'lastDay':
+                    if (!value) {
+                        return showError(field.id, true, 'Please select a last working day');
+                    }
+                    
+                    const lDate = new Date(value);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    const oneMonthFromNow = new Date();
+                    oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+                    
+                    if (lDate < today) {
+                        return showError(field.id, true, 'Last working day cannot be in the past');
+                    }
+                    if (lDate > oneMonthFromNow) {
+                        return showError(field.id, true, 'Last working day cannot be more than 1 month from today');
+                    }
+                    
+                    const joiningDate = document.getElementById('joiningDate').value;
+                    if (joiningDate) {
+                        const jDate = new Date(joiningDate);
+                        const minLastDay = new Date(jDate);
+                        minLastDay.setDate(jDate.getDate() + 90);
+                        
+                        if (lDate <= jDate) {
+                            return showError(field.id, true, 'Last working day must be after joining date');
+                        }
+                        if (lDate < minLastDay) {
+                            return showError(field.id, true, 'Last working day must be at least 90 days after joining date');
+                        }
+                    }
+                    return showError(field.id, false);
+                
+                case 'laptop':
+                    return showError(field.id, !validateTextWithRestrictions(value, 3), 'Details must be 3-30 chars, no triple repeating digits/special chars');
+                
+                case 'laptopCondition':
+                    return showError(field.id, !value, 'Please select laptop condition');
+                
+                case 'accessCard':
+                    return showError(field.id, !validateAccessCard(value), 'Must be 6-12 alphanumeric chars with optional hyphens');
+                
+                case 'currentProjects':
+                    return showError(field.id, !validateTextWithRestrictions(value, 5), 'Must be 5-150 chars, no triple repeating digits/special chars');
+                
+                case 'pendingTasks':
+                    return showError(field.id, !validateTextWithRestrictions(value, 5), 'Must be 5-150 chars, no triple repeating digits/special chars');
+                
+                case 'feedback':
+                    if (value) {
+                        return showError(field.id, !validateTextWithRestrictions(value, 1), 'No triple repeating digits/special chars');
+                    }
+                    return showError(field.id, false);
+                
+                case 'reasonForLeaving':
+                    return showError(field.id, !value, 'Please select a reason for leaving');
+                
+                default:
+                    return true;
+            }
+        }
+
+        function validateOverallExperience() {
+            const selectedOption = document.querySelector('input[name="overallExperience"]:checked');
+            const error = document.getElementById('overallExperienceError');
+            
+            if (!selectedOption) {
+                if (error) error.style.display = 'block';
+                return false;
+            } else {
+                if (error) error.style.display = 'none';
+                return true;
+            }
+        }
+
+        function setupInputListeners() {
+            const inputFields = form.querySelectorAll('input:not([type="radio"]), select, textarea');
+            inputFields.forEach(field => {
+                if (field.type === 'text' || field.tagName.toLowerCase() === 'textarea') {
+                    preventLeadingSpaces(field);
+                }
+                
+                if (field.id === 'email') {
+                    field.addEventListener('input', function() {
+                        const value = this.value;
+                        const domain = '@astrolitetech.com';
+                        if (value.includes(domain)) {
+                            const prefix = value.split(domain)[0];
+                            this.value = prefix + domain;
+                        }
+                    });
+                }
+                
+                field.addEventListener('input', async function() {
+                    if (this.required || this.id === 'feedback') {
+                        if (this.id === 'employeeId' && this.value && validateEmployeeId(this.value)) {
+                            if (await checkDuplicateEmployeeId(this.value)) {
+                                showDuplicateError(this.id);
+                            } else {
+                                showError(this.id, false);
+                            }
+                        } else if (this.id === 'email' && this.value && validateEmail(this.value)) {
+                            if (await checkDuplicateEmail(this.value)) {
+                                showDuplicateError(this.id);
+                            } else {
+                                showError(this.id, false);
+                            }
+                        } else {
+                            validateField(this);
+                        }
+                    }
+                });
+
+                field.addEventListener('blur', async function() {
+                    if (this.required || this.id === 'feedback') {
+                        if (this.id === 'employeeId' && this.value && validateEmployeeId(this.value)) {
+                            if (await checkDuplicateEmployeeId(this.value)) {
+                                showDuplicateError(this.id);
+                            } else {
+                                showError(this.id, false);
+                            }
+                        } else if (this.id === 'email' && this.value && validateEmail(this.value)) {
+                            if (await checkDuplicateEmail(this.value)) {
+                                showDuplicateError(this.id);
+                            } else {
+                                showError(this.id, false);
+                            }
+                        } else {
+                            validateField(this);
+                        }
+                    }
+                });
+            });
+        }
+
+        function setupRadioListeners() {
+            const radioButtons = document.querySelectorAll('input[name="overallExperience"]');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    validateOverallExperience();
+                });
+            });
+        }
+
+        // Form submission handler
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+
+            // Validate all required fields
+            for (const field of requiredFields) {
+                if (!validateField(field)) {
+                    isValid = false;
+                }
+            }
+
+            // Validate overall experience radio buttons
+            if (!validateOverallExperience()) {
+                isValid = false;
+            }
+
+            // Check for duplicates
+            const employeeId = document.getElementById('employeeId').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (employeeId && validateEmployeeId(employeeId) && await checkDuplicateEmployeeId(employeeId)) {
+                showDuplicateError('employeeId');
+                isValid = false;
+            }
+
+            if (email && validateEmail(email) && await checkDuplicateEmail(email)) {
+                showDuplicateError('email');
+                isValid = false;
+            }
+
+            if (isValid) {
+                try {
+                    const submissionData = {
+                        employeeId: employeeId,
+                        fullName: document.getElementById('fullName').value.trim(),
+                        email: email,
+                        department: document.getElementById('department').value,
+                        designation: document.getElementById('designation').value.trim(),
+                        joiningDate: document.getElementById('joiningDate').value,
+                        lastDay: document.getElementById('lastDay').value,
+                        laptop: document.getElementById('laptop').value.trim(),
+                        laptopCondition: document.getElementById('laptopCondition').value,
+                        accessCard: document.getElementById('accessCard').value.trim(),
+                        currentProjects: document.getElementById('currentProjects').value.trim(),
+                        pendingTasks: document.getElementById('pendingTasks').value.trim(),
+                        reasonForLeaving: document.getElementById('reasonForLeaving').value,
+                        overallExperience: document.querySelector('input[name="overallExperience"]:checked')?.value,
+                        feedback: document.getElementById('feedback').value.trim() || null
+                    };
+
+                    const response = await fetch('http://localhost:3000/api/submissions', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(submissionData)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        if (errorData.error.includes('Employee ID')) {
+                            showDuplicateError('employeeId');
+                        } else if (errorData.error.includes('Email')) {
+                            showDuplicateError('email');
+                        } else {
+                            alert(`Error: ${errorData.error}`);
+                        }
+                        return;
+                    }
+
+                    alert('Form submitted successfully!');
+                    form.reset();
+                    document.querySelectorAll('.char-counter').forEach(counter => {
+                        counter.textContent = '0/150';
+                    });
+                } catch (error) {
+                    console.error('Error during form submission:', error);
+                    alert('There was an error submitting the form. Please try again.');
+                }
+            } else {
+                const firstError = form.querySelector('.error-field');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        setupDateInputs();
+        setupCharCounters();
+        setupInputListeners();
+        setupRadioListeners();
+    });
+    </script>
+</body>
+</html>
