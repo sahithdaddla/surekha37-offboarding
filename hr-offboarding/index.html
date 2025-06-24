@@ -674,7 +674,7 @@
 
             async function loadSubmissions() {
                 try {
-                    const response = await fetch('http://16.171.7.147:3045/api/submissions');
+                    const response = await fetch('http://13.60.180.89:3045/api/submissions');
                     if (!response.ok) {
                         throw new Error('Failed to load submissions');
                     }
@@ -741,7 +741,7 @@
                         alert('No records selected');
                         return;
                     }
-                    const response = await fetch('http://16.171.7.147:3045/api/submissions/delete', {
+                    const response = await fetch('http://13.60.180.89:3045/api/submissions/delete', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ ids })
@@ -765,7 +765,7 @@
                     return;
                 }
                 try {
-                    const response = await fetch(`http://16.171.7.147:3045/api/submissions/search/${encodeURIComponent(searchTerm)}`);
+                    const response = await fetch(`http://13.60.180.89:3045/api/submissions/search/${encodeURIComponent(searchTerm)}`);
                     if (!response.ok) {
                         throw new Error('Failed to search submissions');
                     }
@@ -786,7 +786,7 @@
                     return;
                 }
                 try {
-                    const response = await fetch('http://16.171.7.147:3045/api/submissions', {
+                    const response = await fetch('http://13.60.180.89:3045/api/submissions', {
                         method: 'DELETE'
                     });
                     if (!response.ok) {
@@ -822,7 +822,7 @@
                     return;
                 }
                 try {
-                    const response = await fetch(`http://16.171.7.147:3045/api/submissions/${id}/status`, {
+                    const response = await fetch(`http://13.60.180.89:3045/api/submissions/${id}/status`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ status: 'Approved' })
@@ -843,7 +843,7 @@
                     return;
                 }
                 try {
-                    const response = await fetch(`http://16.171.7.147:3045/api/submissions/${id}/status`, {
+                    const response = await fetch(`http://13.60.180.89:3045/api/submissions/${id}/status`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ status: 'Rejected' })
@@ -861,7 +861,7 @@
 
             window.viewDetails = async function(id) {
                 try {
-                    const response = await fetch(`http://16.171.7.147:3045/api/submissions/${id}`);
+                    const response = await fetch(`http://13.60.180.89:3045/api/submissions/${id}`);
                     if (!response.ok) {
                         throw new Error('Failed to fetch submission details');
                     }
