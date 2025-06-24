@@ -538,7 +538,7 @@
 
         async function checkDuplicateEmployeeId(employeeId) {
             try {
-                const response = await fetch(`http://localhost:3000/api/submissions/search/${encodeURIComponent(employeeId)}`);
+                const response = await fetch(`http://16.171.7.147:3045/api/submissions/search/${encodeURIComponent(employeeId)}`);
                 if (!response.ok) {
                     throw new Error('Failed to check duplicate employee ID');
                 }
@@ -552,7 +552,7 @@
 
         async function checkDuplicateEmail(email) {
             try {
-                const response = await fetch(`http://localhost:3000/api/submissions/search/${encodeURIComponent(email)}`);
+                const response = await fetch(`http://16.171.7.147:3045/api/submissions/search/${encodeURIComponent(email)}`);
                 if (!response.ok) {
                     throw new Error('Failed to check duplicate email');
                 }
@@ -851,7 +851,7 @@
                         feedback: document.getElementById('feedback').value.trim() || null
                     };
 
-                    const response = await fetch('http://localhost:3000/api/submissions', {
+                    const response = await fetch('http://16.171.7.147:3045/api/submissions', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(submissionData)
