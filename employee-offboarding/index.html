@@ -538,6 +538,7 @@
 
         async function checkDuplicateEmployeeId(employeeId) {
             try {
+
                 const response = await fetch(`http://56.228.41.185:3601/api/submissions/search/${encodeURIComponent(employeeId)}`);
                 if (!response.ok) {
                     throw new Error('Failed to check duplicate employee ID');
@@ -552,6 +553,7 @@
 
         async function checkDuplicateEmail(email) {
             try {
+
                 const response = await fetch(`http://56.228.41.185:3601/api/submissions/search/${encodeURIComponent(email)}`);
                 if (!response.ok) {
                     throw new Error('Failed to check duplicate email');
