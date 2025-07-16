@@ -3,7 +3,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:14
-    container_name: offboarding37-postgres
+    container_name: offboarding337-postgres
     environment:
       POSTGRES_DB: offboarding_db
       POSTGRES_USER: postgres
